@@ -737,6 +737,7 @@
     /* ===================================================
        MODALE RÉSERVATION — styles
     =================================================== */
+    .modal-backdrop {
       position: fixed;
       inset: 0;
       z-index: 500;
@@ -748,12 +749,15 @@
       justify-content: center;
       padding: 20px;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
     }
     .modal-backdrop.is-open {
       opacity: 1;
+      visibility: visible;
       pointer-events: auto;
+      transition: opacity 0.3s ease, visibility 0s linear 0s;
     }
     .modal-box {
       background: var(--white);
@@ -1220,12 +1224,7 @@
         <button class="avis-btn" id="prevAvis" aria-label="Avis précédent">
           <svg viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <div class="avis-dots" id="avisDots">
-          <div class="dot active" data-i="0"></div>
-          <div class="dot" data-i="1"></div>
-          <div class="dot" data-i="2"></div>
-          <div class="dot" data-i="3"></div>
-        </div>
+        <div class="avis-dots" id="avisDots"></div>
         <button class="avis-btn" id="nextAvis" aria-label="Avis suivant">
           <svg viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
         </button>
@@ -1443,11 +1442,40 @@
       { text: '"Un endroit magique au pied de la cathédrale. La cuisine est délicieuse, tout est fait maison. L\'équipe est chaleureuse et le cadre avec les pierres apparentes est vraiment unique."', author: '— Marie L.', stars: 5 },
       { text: '"Excellent restaurant, cuisine fraîche et savoureuse. La terrasse avec vue sur la cathédrale est splendide. Je recommande vivement les formules du midi, rapport qualité-prix imbattable."', author: '— Thomas B.', stars: 5 },
       { text: '"Une adresse incontournable à Albi. Cadre historique magnifique, service attentionné et plats faits maison délicieux. Le dessert était à tomber !"', author: '— Sophie R.', stars: 5 },
-      { text: '"Superbe découverte lors de notre passage à Albi. L\'équipe est adorable, la cuisine est fraîche et gourmande. On reviendra sûrement lors de notre prochain séjour !"', author: '— Un utilisateur Google', stars: 5 }
+      { text: '"Superbe découverte lors de notre passage à Albi. L\'équipe est adorable, la cuisine est fraîche et gourmande. On reviendra sûrement lors de notre prochain séjour !"', author: '— Un utilisateur Google', stars: 5 },
+      { text: '"Très bon établissement situé à proximité de la cathédrale. Avons déjeuner en terrasse. Accueil et prise en charge rapide et agréable."', author: '— Patrick S.', stars: 5 },
+      { text: '"J\'ai découvert le restaurant Le May Milton par pure hasard à Albi, et quelle belle surprise ! Dès mon arrivée, on a été chaleureusement accueilli par une équipe dynamique et souriante, qui met un point d\'honneur à offrir un service…"', author: '— Matis GRD', stars: 5 },
+      { text: '"Bien situé dans une ruelle près de la cathédrale. Grande salle au calme avec un petit bassin de carpes. Menus à prix très correct. Plats cuisinés avec finesse. Nous avons passés un très bon moment dans ce restaurant."', author: '— Laëtitia Lgg', stars: 5 },
+      { text: '"Très bel accueil de l\'employée, très gentille et souriante malgré le rush ! C\'était très bon, le rapport qualité prix est excellent : Entrée / Plat / Dessert pour 19€, les plats sont généreux, tarte à la courge et au chèvre très bonne…"', author: '— Arselan B.', stars: 5 },
+      { text: '"Un coin tranquille à l\'écart de la foule, juste à côté du musée Toulouse-Lautrec et de l\'entrée nord de la cathédrale. Pas de frime, pas de cinéma, mais une cuisine maison authentique et délicieuse…"', author: '— Jean-Pierre N.', stars: 5 },
+      { text: '"Très bon établissement, je recommande, qualité prix parfait, serveuse très agréable et la cuisine très bien présenté et très bonne !"', author: '— Sara', stars: 5 },
+      { text: '"Atmosphère super tranquille, le personnel est très accueillant et toujours avec le sourire. On s\'est régalé avec les plats de viande et de poisson."', author: '— Mauro V.', stars: 5 },
+      { text: '"Très belle découverte du restaurant et l\'accueil très très agréable. Si vous devez manger sur Albi n\'hésitez pas à aller au May Milton, menu très bon avec un rapport qualité prix très très intéressant…"', author: '— Frédéric L.', stars: 5 },
+      { text: '"Restaurant très agréable et accueil parfait. Le service est très bien, nous nous sommes régalés du grand au plus petit. 16 euros le menu plat dessert, que demander de mieux…"', author: '— Alexandre R.', stars: 5 },
+      { text: '"De passage à Albi nous avons déjeuner au May Milton. Nous avons été très bien accueillis, la cuisine fut délicieuse de l\'entrée au dessert dans un cadre ravissant au pied de la cathédrale."', author: '— Ines A.', stars: 5 },
+      { text: '"De passage à Albi à la recherche d\'un restaurant avec des produits locaux, nous n\'avons pas été déçus. Très bon accueil dès la porte d\'entrée. Plats savoureux et excellent qualité-prix dans un cadre avec du charme !"', author: '— Claire Lht', stars: 5 },
+      { text: '"Une Irlandaise rencontrée en chemin nous avait recommandé ce restaurant à côté de la cathédrale pour son menu à 19 € et son très bon poisson au lait de coco. Elle avait raison !"', author: '— Nane', stars: 5 },
+      { text: '"Idéalement situé au centre-ville tout à côté du musée Toulouse-Lautrec. Nous avons très bien mangé : soupe à l\'oignon, farcou et cheese-cake pour 19€. Service rapide, joli cadre. Parfait."', author: '— Ch B.', stars: 5 },
+      { text: '"Nous avons pris le menu à 19€, excellent rapport qualité prix. Très bonne cuisine bien présentée, bon accueil, service rapide. Je recommande."', author: '— Hauvy S.', stars: 5 },
+      { text: '"Restaurant situé en plein cœur d\'Albi, dans un cadre absolument magnifique où le moderne se marie parfaitement à la pierre ancienne. La décoration est faite avec beaucoup de goût. La cuisine est très bonne."', author: '— Bernardet L.', stars: 5 },
+      { text: '"Le sourire à l\'accueil rend la visite encore plus plaisante. Bel établissement avec beaucoup de charme. Un excellent rapport qualité-prix : des tarifs justes et des plats savoureux."', author: '— Patricia C.', stars: 5 },
+      { text: '"La cuisine était délicieuse et les quantités suffisantes. Le cadre est sympa. Merci à Maria de son accueil et sa gentillesse."', author: '— D\'Bloc-on-Ensemble', stars: 5 },
+      { text: '"Excellente table, produits de qualité, personnel d\'une rare gentillesse, emplacement exceptionnel au cœur de la ville juste à côté de la Cathédrale Sainte-Cécile. Je recommande sans hésiter."', author: '— Sébastien G.', stars: 5 },
+      { text: '"Resto proche de la cathédrale avec accueil sympa et personnel souriant. Choix et spécialités locales dont le perlé pour l\'apéro. À découvrir !"', author: '— Patrick H.', stars: 5 }
     ];
 
     let current  = 0;
     let autoTimer = null;
+
+    /* Génération dynamique des dots */
+    const dotsContainer = document.getElementById('avisDots');
+    reviews.forEach(function(_, i) {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.dataset.i = i;
+      dot.addEventListener('click', function() { showReview(i); startAuto(); });
+      dotsContainer.appendChild(dot);
+    });
 
     function showReview(i) {
       const card = document.getElementById('avisCard');
@@ -1470,9 +1498,6 @@
 
     document.getElementById('nextAvis').addEventListener('click', () => { showReview(current + 1); startAuto(); });
     document.getElementById('prevAvis').addEventListener('click', () => { showReview(current - 1); startAuto(); });
-    document.querySelectorAll('.dot').forEach(d => {
-      d.addEventListener('click', () => { showReview(parseInt(d.dataset.i)); startAuto(); });
-    });
 
     startAuto();
   </script>
