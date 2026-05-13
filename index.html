@@ -961,9 +961,6 @@
       .nav-cta { padding: 9px 14px; font-size: 10px; }
     }
   </style>
-  <!-- FIREBASE SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -989,8 +986,6 @@
     <a href="#contact"        class="overlay-link">Contact &amp; Horaires</a>
     <div class="overlay-separator" aria-hidden="true"></div>
     <a href="#reserver"       class="overlay-link open-modal">Réserver</a>
-    <div class="overlay-separator" aria-hidden="true"></div>
-<a href="#" class="overlay-link" id="btn-espace-membres">Espace membres</a>
   </div>
 
   <!-- HERO -->
@@ -1531,91 +1526,5 @@
 
     startAuto();
   </script>
-<!-- MODALE LOGIN -->
-<div id="modal-login" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:9999; display:none; align-items:center; justify-content:center;">
-  <div style="background:#1a1a1a; padding:2rem; border-radius:12px; width:90%; max-width:400px; text-align:center;">
-    <h2 style="color:#fff; margin-bottom:1.5rem;">Espace membres</h2>
-    <input type="email" id="login-email" placeholder="Email" style="width:100%; padding:0.8rem; margin-bottom:1rem; border-radius:6px; border:none; font-size:1rem;">
-    <input type="password" id="login-pwd" placeholder="Mot de passe" style="width:100%; padding:0.8rem; margin-bottom:1rem; border-radius:6px; border:none; font-size:1rem;">
-    <p id="login-error" style="color:#ff4444; margin-bottom:1rem; display:none;">Identifiants incorrects.</p>
-    <button id="btn-submit-login" style="background:#c0392b; color:#fff; border:none; padding:0.8rem 2rem; border-radius:6px; font-size:1rem; cursor:pointer; width:100%;">Se connecter</button>
-    <p><a href="#" id="btn-fermer-login" style="color:#aaa; font-size:0.85rem; margin-top:1rem; display:inline-block;">Fermer</a></p>
-  </div>
-</div>
-
-<!-- CONTENU RESTREINT (masqué par défaut) -->
-<div id="espace-membres-contenu" style="display:none; position:fixed; inset:0; background:#111; z-index:9998; padding:2rem; overflow-y:auto;">
-  <div style="max-width:800px; margin:0 auto; color:#fff;">
-    <button id="btn-deconnexion" style="background:#333; color:#fff; border:none; padding:0.5rem 1rem; border-radius:6px; cursor:pointer; margin-bottom:2rem;">Se déconnecter</button>
-    <h1 style="color:#fff;">Espace membres ✓</h1>
-    <p style="color:#aaa;">Connexion réussie. Le contenu restreint s'affiche ici.</p>
-    <!-- Tu remplaceras ce contenu par les vraies infos du CSE -->
-  </div>
-</div>
-
-<!-- FIREBASE LOGIC -->
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCL8kRjl56Ct8Vq6-c6hmLZR4bQwG8vCN4",
-    authDomain: "test1-fbe11.firebaseapp.com",
-    projectId: "test1-fbe11",
-    storageBucket: "test1-fbe11.firebasestorage.app",
-    messagingSenderId: "444394221375",
-    appId: "1:444394221375:web:47f90c688f7e6af102ed8a"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-
-  const modalLogin        = document.getElementById('modal-login');
-  const contenuRestreint  = document.getElementById('espace-membres-contenu');
-  const btnOuvrir         = document.getElementById('btn-espace-membres');
-  const btnFermer         = document.getElementById('btn-fermer-login');
-  const btnSubmit         = document.getElementById('btn-submit-login');
-  const btnDeconnexion    = document.getElementById('btn-deconnexion');
-  const loginError        = document.getElementById('login-error');
-
-  // Ouvrir la modale login
-  btnOuvrir.addEventListener('click', (e) => {
-    e.preventDefault();
-    modalLogin.style.display = 'flex';
-  });
-
-  // Fermer la modale
-  btnFermer.addEventListener('click', (e) => {
-    e.preventDefault();
-    modalLogin.style.display = 'none';
-  });
-
-  // Tentative de connexion
-  btnSubmit.addEventListener('click', () => {
-    const email = document.getElementById('login-email').value;
-    const pwd   = document.getElementById('login-pwd').value;
-    loginError.style.display = 'none';
-
-    auth.signInWithEmailAndPassword(email, pwd)
-      .then(() => {
-        modalLogin.style.display = 'none';
-        contenuRestreint.style.display = 'block';
-      })
-      .catch(() => {
-        loginError.style.display = 'block';
-      });
-  });
-
-  // Déconnexion
-  btnDeconnexion.addEventListener('click', () => {
-    auth.signOut().then(() => {
-      contenuRestreint.style.display = 'none';
-    });
-  });
-
-  // Si déjà connecté au rechargement de page
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      contenuRestreint.style.display = 'block';
-    }
-  });
-</script>
 </body>
 </html>
